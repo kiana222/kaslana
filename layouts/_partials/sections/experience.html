@@ -1,0 +1,12 @@
+{{ $d := (hugo.Data).experience }}
+{{ $meta := (index (where (hugo.Data).sections "id" "experience") 0) }}
+<div class="page" id="experience" data-page="3">
+{{ partial "page-title.html" $meta }}
+        <p class="sec-lead">{{ $meta.lead | safeHTML }}</p>
+        <div class="timeline">{{ range $d.items }}
+<div class="timeline-item exp-item">
+  <div class="exp-header"><div class="exp-title">{{ .title | safeHTML }}</div><div class="exp-date">{{ .date }}</div></div>
+  <div class="exp-desc"><ul>{{ range .bullets_html }}<li>{{ . | safeHTML }}</li>{{ end }}</ul></div>
+</div>
+{{ end }}</div>
+      </div>

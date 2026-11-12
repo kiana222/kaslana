@@ -1,0 +1,25 @@
+lead_html: "\n          重庆大学工科试验班（未来信息）2026 级新生。现任班级组织委员，也借助 AI 做过网站、游戏和视频；\n          <span class=\"hl\">办事靠谱、上手快</span>，想在大学里继续帮集体做事，也把感兴趣的方向做深。\n        "
+stats:
+- count: '3'
+  label: 位学生暑期辅导
+- count: '1'
+  label: 款原创小游戏
+- count: '1'
+  label: 支自制视频
+- count: '1'
+  label: 项校级一等奖
+- count: '1'
+  label: 项省级奖项
+- count: '2000'
+  label: 广西高考位次
+items_html:
+- <strong>组织与沟通：</strong>高中当过生活委员和数学课代表，管过卫生检查、布置过活动场地，也负责把通知准确传到每个人。
+- <strong>内容与技术：</strong>自学 Codex、Obsidian、WorkBuddy 等学习工具，<span class="deco-anchor wave-anchor">借助 AI 搭建了多个自制网站</span>，也尝试过游戏和视频创作；日常用工具辅助数据整理与文档处理。
+- <strong>学习与成长：</strong>暑假从零自学 AI 工具，做出第一款游戏和第一支视频；遇到新东西习惯先动手试。
+tags:
+- AI 创作者
+- 班委老手
+- 自学狂
+- 羽毛球爱好者
+- 科幻迷
+handnote: ✏️ 网站、游戏和视频，都是边学边做的。

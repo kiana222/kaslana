@@ -1,0 +1,38 @@
+items:
+- title: 科技周 & AI 探索
+  title_class: deco-holder cloud-anchor
+  description_html: 高中多次参加校园科技周，做过悬浮原理探究、月球小车等项目。暑假自学 Codex、Obsidian、WorkBuddy 等学习工具，借助 AI 搭建了多个网站，并<span class="hl">做出第一款小游戏和第一支视频</span>；平时也用工具辅助处理数据、整理文档和制作 PPT。<br>还常按班里的实际需要动手做小工具，<span class="hl">做了一个班级日志小程序</span>，日常记录和交接都省事不少。
+  hint: 可以聊：这款游戏是怎么用 AI 一步步做出来的？
+  actions:
+  - label: 体验自创游戏
+    href: https://jazzy-churros-945056.netlify.app/
+    preview: assets/game_preview.png
+    preview_label: 坦克大战 · 我的自制游戏
+  - label: 观看自制PPT
+    href: ppt/index.html
+    preview: assets/ppt_preview.png
+    preview_label: 人工智能的进化 · 我的自制PPT
+  - label: 观看班级日志
+    href: https://kiana222.github.io/calendar/
+    preview: ''
+    preview_label: ''
+- title: 暑期辅导
+  title_class: ''
+  description_html: 暑假同时辅导三个学生的数学和物理，<span class="deco-anchor wave-anchor">帮他们补基础</span>，也练了自己讲题和梳理思路的能力。
+  hint: 可以聊：同时带三个学生，进度和节奏怎么排？
+  actions: []
+- title: 嵌入式开发与 C 语言自学
+  title_class: ''
+  description_html: 目前正在自学<span class="hl">嵌入式开发与 C 语言</span>，逐步积累编程基础与单片机相关知识。
+  hint: ''
+  actions: []
+- title: SRTP 项目立项
+  title_class: ''
+  description_html: 作为队长，<span class="hl">带领团队通过 SRTP 项目立项</span>。
+  hint: ''
+  actions: []
+- title: 竞赛历练 & 双创中心
+  title_class: deco-holder star-anchor
+  description_html: 参加 CRTC 竞赛，<span class="hl">学习了 STM32 的入门知识</span>；参加 RST 竞赛，已获得进入国赛的资格。现加入校双创中心创业竞赛服务部，参与竞赛信息整理与服务支持，持续积累赛事经验。
+  hint: 可以聊：在 CRTC 中学到了什么，RST 是如何备赛的？
+  actions: []

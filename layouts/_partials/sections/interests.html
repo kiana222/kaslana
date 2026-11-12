@@ -1,0 +1,28 @@
+{{ $d := (hugo.Data).interests }}
+{{ $meta := (index (where (hugo.Data).sections "id" "interests") 0) }}
+<div class="page" id="interests" data-page="6">
+{{ partial "page-title.html" $meta }}
+        <p class="sec-lead">{{ $meta.lead | safeHTML }}</p>
+        
+        <!-- 兴趣卡片 -->
+        <div class="interests-grid" id="interestsGrid">{{ range $d.tags }}<span class="{{ .class }}"{{ with .id }} id="{{ . }}"{{ end }}>{{ .html | safeHTML }}</span>{{ end }}</div>
+
+        <!-- 原神/Steam 信息面板 -->
+        <div class="game-info-panel" id="gameInfoPanel">
+          <div class="game-info-item">{{ index $d.game_details_html 0 | safeHTML }}</div>
+          <div class="game-info-item">{{ index $d.game_details_html 1 | safeHTML }}</div>
+          <button class="back-btn" id="backToInterestsBtn">返回个人兴趣</button>
+        </div>
+
+        <!-- AI 自创游戏 信息面板 -->
+        <div class="game-info-panel" id="aiGameInfoPanel">
+          <div class="game-info-item"><strong>{{ $d.game.title }}</strong></div>
+          <div class="game-info-item" style="font-size: 1rem; word-break: break-all;">
+            <a href="{{ $d.game.href }}" target="_blank" class="game-link" rel="noopener noreferrer">
+              {{ $d.game.display_url }}
+            </a>
+            <div style="margin-top: 8px; font-size: 0.9rem; color: var(--text-muted);">{{ $d.game.note }}</div>
+          </div>
+          <button class="back-btn" id="backToAiBtn">返回个人兴趣</button>
+        </div>
+      </div>

@@ -1,0 +1,49 @@
+- id: about
+  nav: 个人定位
+  kicker: ABOUT
+  subtitle: // 自我定位
+  icon: ✨
+  title: 个人定位
+  lead: ''
+- id: education
+  nav: 教育背景
+  kicker: EDUCATION
+  subtitle: // 求学之路
+  icon: 🎓
+  title: 教育背景
+  lead: 重庆大学工科试验班（未来信息）· 2026 级新生
+- id: skills
+  nav: 专业技能
+  kicker: SKILLS
+  subtitle: // 能力清单
+  icon: ⚙️
+  title: 专业技能
+  lead: 常用工具、技术栈与能力一览，重点是 AI 与动手
+- id: experience
+  nav: 校园经历
+  kicker: EXPERIENCE
+  subtitle: // 校园足迹
+  icon: 📋
+  title: 校园经历
+  lead: 从初中班长到大学组织委员：把琐事做好，也是一种能力
+- id: practice
+  nav: 实践经历
+  kicker: PRACTICE
+  subtitle: // 动手实践
+  icon: 🚀
+  title: 实践经历
+  lead: 从工具创作到竞赛与 SRTP 项目，在实践中持续学习
+- id: honors
+  nav: 获奖荣誉
+  kicker: CERTIFICATE
+  subtitle: // 荣誉证书
+  icon: 🏅
+  title: 获奖与荣誉
+  lead: 每一张都真实可查
+- id: interests
+  nav: 个人兴趣
+  kicker: INTERESTS
+  subtitle: // 生活热爱
+  icon: 🎮
+  title: 个人兴趣
+  lead: 给生活留点热爱

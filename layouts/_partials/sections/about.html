@@ -1,0 +1,14 @@
+{{ $d := (hugo.Data).about }}
+{{ $meta := (index (where (hugo.Data).sections "id" "about") 0) }}
+<div class="page" id="about" data-page="0">
+{{ partial "page-title.html" $meta }}
+        <p class="about-lead">{{ $d.lead_html | safeHTML }}</p>
+<div class="stats-grid deco-holder cloud-anchor">{{ range $d.stats }}
+<div class="stat-card tilt"><div class="stat-num" data-count="{{ .count }}">0</div><div class="stat-label">{{ .label }}</div></div>
+{{ end }}</div>
+        <div class="exp-desc">
+          <ul>{{ range $d.items_html }}<li>{{ . | safeHTML }}</li>{{ end }}</ul>
+        </div>
+        <div class="persona-tags">{{ range $d.tags }}<span class="persona-tag">{{ . }}</span>{{ end }}</div>
+        <p class="handnote">{{ $d.handnote }}</p>
+      </div>

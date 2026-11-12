@@ -1,0 +1,22 @@
+{{ $d := (hugo.Data).education }}
+{{ $meta := (index (where (hugo.Data).sections "id" "education") 0) }}
+<div class="page" id="education" data-page="1">
+{{ partial "page-title.html" $meta }}
+        <p class="sec-lead">{{ $meta.lead | safeHTML }}</p>
+        <div class="timeline">
+          <div class="timeline-item edu-item">
+            <div>
+<span class="school deco-anchor wave-anchor">{{ $d.school }}</span>
+              <span class="badge">{{ index $d.badges 0 }}</span>
+              <span class="badge">{{ index $d.badges 1 }}</span>
+              <span style="font-weight:400; color:var(--text-secondary); margin-left:8px;">{{ $d.program }}</span>
+            </div>
+            <div class="date">{{ $d.date }}</div>
+          </div>
+          <div class="timeline-item highschool">
+<span class="school-name">{{ $d.highschool }}</span>
+            <span style="color:var(--text-secondary); margin-left:6px;">{{ $d.highschool_group }}</span>
+            <span class="badge">{{ index $d.badges 2 }}</span>
+          </div>
+        </div>
+      </div>

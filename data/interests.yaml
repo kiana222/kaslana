@@ -1,0 +1,21 @@
+tags:
+- class: interest-tag tilt deco-holder cloud-anchor
+  id: ''
+  html: <span class="icon">🚀</span> 科幻爱好者
+- class: interest-tag tilt
+  id: ''
+  html: <span class="icon">🏸</span> 羽毛球
+- class: interest-tag clickable tilt
+  id: openWorldGameBtn
+  html: <span class="icon">🎮</span> 开放世界游戏 ➜
+- class: interest-tag clickable tilt deco-holder star-anchor
+  id: aiGameBtn
+  html: <span class="icon">🤖</span> AI 自创游戏 ➜
+game_details_html:
+- <strong>原神 UID：</strong>209751882
+- <strong>Steam 好友代码：</strong>763034251
+game:
+  title: 🎮 第一个自创游戏
+  href: https://jazzy-churros-945056.netlify.app/
+  display_url: jazzy-churros-945056.netlify.app
+  note: （仅限 PC 端游玩）

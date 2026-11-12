@@ -1,0 +1,20 @@
+{{ $d := (hugo.Data).practice }}
+{{ $meta := (index (where (hugo.Data).sections "id" "practice") 0) }}
+<div class="page" id="practice" data-page="4">
+{{ partial "page-title.html" $meta }}
+        <p class="sec-lead">{{ $meta.lead | safeHTML }}</p>
+        {{ range $d.items }}
+<div class="project-card reveal tilt">
+<h3{{ with .title_class }} class="{{ . }}"{{ end }}>{{ .title }}</h3>
+<p>{{ .description_html | safeHTML }}</p>
+{{ with .hint }}<div class="qa-hint">{{ . }}</div>{{ end }}
+{{ with .actions }}<div class="project-actions">{{ range . }}
+<a class="btn-link" href="{{ .href }}" target="_blank" rel="noopener noreferrer"{{ with .preview }} data-preview="{{ . }}"{{ end }}{{ with .preview_label }} data-preview-label="{{ . }}"{{ end }}>{{ .label }}</a>
+{{ end }}</div>{{ end }}
+</div>
+{{ end }}
+        
+        
+        
+        
+      </div>

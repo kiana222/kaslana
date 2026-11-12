@@ -1,0 +1,9 @@
+{{ $d := (hugo.Data).skills }}
+{{ $meta := (index (where (hugo.Data).sections "id" "skills") 0) }}
+<div class="page" id="skills" data-page="2">
+{{ partial "page-title.html" $meta }}
+        <p class="sec-lead">{{ $meta.lead | safeHTML }}</p>
+        <div class="skills-grid">{{ range $d.items }}
+<div class="{{ .class }}"><span class="skill-icon">{{ .icon }}</span><span class="skill-name">{{ .name }}</span><span class="skill-tier">{{ .tier }}</span></div>
+{{ end }}</div>
+      </div>

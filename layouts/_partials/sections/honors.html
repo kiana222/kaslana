@@ -1,0 +1,23 @@
+{{ $d := (hugo.Data).honors }}
+{{ $meta := (index (where (hugo.Data).sections "id" "honors") 0) }}
+<div class="page" id="honors" data-page="5">
+{{ partial "page-title.html" $meta }}
+        <p class="sec-lead">{{ $meta.lead | safeHTML }}</p>
+        
+        <div class="honors-layout">
+          <div class="honors-block medals">
+            <div class="awards-grid">{{ range $d.items }}
+<div class="{{ .class }}"><span class="medal-icon">{{ .icon }}</span><span class="medal-title">{{ .title }}</span><span class="medal-meta">{{ .meta }}</span></div>
+{{ end }}</div>
+          </div>
+          <div class="honors-block certs">
+            <div class="cert-carousel">
+              <button class="carousel-btn" id="certPrev" aria-label="上一张证书">‹</button>
+              <div class="cert-stage" id="certStage">
+                <div class="cert-track" id="certTrack"></div>
+              </div>
+              <button class="carousel-btn" id="certNext" aria-label="下一张证书">›</button>
+            </div>
+          </div>
+        </div>
+      </div>

@@ -1,0 +1,134 @@
+{{- $profile := (hugo.Data).profile -}}
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>{{ .Site.Title }}</title>
+  {{ $css := resources.Get "css/site.css" }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}">
+</head>
+<body>
+
+<div class="top-nav" id="topNav">
+  {{ range $i, $section := (hugo.Data).sections }}<a class="nav-link{{ if eq $i 0 }} active{{ end }}" href="#{{ .id }}">{{ .nav }}</a>{{ end }}
+  
+  
+  
+  
+  
+  
+  <div class="nav-right">
+    <div class="style-wrap">
+      <button class="style-btn" id="styleBtn" aria-label="切换整体风格">🎨 风格</button>
+      <div class="style-panel" id="stylePanel">
+        <button class="style-item active" data-style="tech"><span class="style-dot tech"></span><span class="style-name">科技蓝黑</span><span class="style-desc">默认 · 深色可选</span></button>
+        <button class="style-item" data-style="paper"><span class="style-dot paper"></span><span class="style-name">纸张复古</span><span class="style-desc">温和手写感</span></button>
+        <button class="style-item" data-style="neon"><span class="style-dot neon"></span><span class="style-name">霓虹</span><span class="style-desc">大量动效 · 网络波动时可能卡顿</span></button>
+      </div>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="切换黑白主题">🌓</button>
+  </div>
+</div>
+<div id="scrollProgress"></div>
+<div id="cursorGlow" aria-hidden="true"></div>
+<div id="mouseTrail" aria-hidden="true"></div>
+<canvas id="particleCanvas" aria-hidden="true"></canvas>
+<div class="container">
+  <!-- 左侧内容区 -->
+  <div class="content">
+    <div class="pages" id="pagesContainer">
+{{ range (hugo.Data).sections }}{{ partial (printf "sections/%s.html" .id) $ }}{{ end }}
+
+    </div>
+
+  </div>
+
+  <!-- 右侧大头照（1.jpg）+ 艺术字姓名 + 联系方式 + 导出PDF（移除原播放器） -->
+  <div class="photo">
+    <img src="{{ $profile.photo | relURL }}" alt="{{ $profile.photo_alt }}" class="photo-img">
+    <div class="art-name">{{ $profile.name }}</div>
+    
+    <div class="contact-info">
+      <div class="contact-item">
+        <span>📞 {{ $profile.phone }}</span>
+        <button class="copy-btn" data-clipboard-text="{{ $profile.phone }}">复制</button>
+      </div>
+      <div class="contact-item">
+        <span class="qq-highlight">🐧 <span class="qq-text">QQ:</span> {{ $profile.qq }}</span>
+        <button class="copy-btn" data-clipboard-text="{{ $profile.qq }}">复制</button>
+      </div>
+      <button class="print-btn" onclick="window.print()">📄 导出PDF</button>
+      <div style="margin-top:2px; font-size:0.78rem; color:var(--text-muted);">数据更新时间：{{ $profile.updated }}</div>
+    </div>
+  </div>
+</div>
+
+<!-- 首次开启音乐的音量确认弹窗 -->
+<div class="music-modal" id="musicModal" role="dialog" aria-modal="true">
+  <div class="music-modal-card">
+    <h3>开启音乐</h3>
+    <p>播放器音量可能较大，是否开启音乐？<br>开启后可随时在右下角暂停或调低音量。</p>
+    <div class="music-modal-actions">
+      <button class="modal-btn primary" id="musicConfirmBtn">开启音乐</button>
+      <button class="modal-btn" id="musicCancelBtn">暂不开启</button>
+    </div>
+  </div>
+</div>
+
+<!-- 霓虹风格切换确认弹窗 -->
+<div class="style-modal" id="styleModal" role="dialog" aria-modal="true">
+  <div class="music-modal-card">
+    <h3>切换霓虹风格</h3>
+    <p>该风格包含大量动效，网络波动时可能出现卡顿，是否切换？<br>可随时切回其他风格。</p>
+    <div class="music-modal-actions">
+      <button class="modal-btn primary" id="styleConfirmBtn">切换</button>
+      <button class="modal-btn" id="styleCancelBtn">取消</button>
+    </div>
+  </div>
+</div>
+
+<!-- 悬浮音乐播放器（右下角按钮 + 迷你面板） -->
+<button class="music-float" id="musicFloatBtn" aria-label="打开音乐播放器">🎵</button>
+<button class="style-float" id="styleFloatBtn" aria-label="切换风格">🎨</button>
+<div class="music-panel" id="musicPanel">
+  <audio id="globalAudio" preload="metadata"></audio>
+  <div class="music-controls">
+    <button class="music-btn" id="prevBtn" onclick="prevSong()">⏮</button>
+    <button class="music-btn play-btn" id="playBtn" onclick="togglePlay()">▶️</button>
+    <button class="music-btn" id="nextBtn" onclick="nextSong()">⏭</button>
+  </div>
+  <div class="progress-container">
+    <span id="currentTime">0:00</span>
+    <input type="range" class="progress-bar" id="progressBar" min="0" max="100" value="0" oninput="seekTo(this.value)">
+    <span id="duration">0:00</span>
+  </div>
+
+  <!-- 播放模式切换及音量调节 -->
+  <div class="extra-controls">
+    <div class="mode-controls">
+      <button class="mode-btn active" id="modeOrderBtn" onclick="setPlayMode('order')">🔁 顺序</button>
+      <button class="mode-btn" id="modeLoopBtn" onclick="setPlayMode('loop')">🔂 单曲</button>
+      <button class="mode-btn" id="modeShuffleBtn" onclick="setPlayMode('shuffle')">🔀 随机</button>
+    </div>
+    <div class="volume-controls">
+      <button class="music-btn" id="muteBtn">🔊</button>
+      <input type="range" class="volume-bar" id="volumeBar" min="0" max="1" step="0.01" value="0.5">
+    </div>
+  </div>
+</div>
+<button id="backTopBtn" aria-label="返回顶部">↑</button>
+
+<!-- 移动端底部工具条（桌面端隐藏） -->
+<div class="mobile-bar" id="mobileBar">
+  <button class="mbar-btn" id="styleFloatBtnM" aria-label="切换风格">🎨 风格</button>
+  <button class="mbar-btn" id="backTopBtnM" aria-label="返回顶部">↑</button>
+  <button class="mbar-btn" id="musicFloatBtnM" aria-label="打开音乐播放器">🎵 音乐</button>
+</div>
+
+<script id="resume-data" type="application/json">{{ (hugo.Data).media | jsonify | safeJS }}</script>
+{{ $js := resources.Get "js/site.js" }}
+<script src="{{ $js.RelPermalink }}"></script>
+
+</body>
+</html>

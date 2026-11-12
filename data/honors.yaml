@@ -1,0 +1,21 @@
+items:
+- class: medal-item reveal tilt
+  icon: 🏅
+  title: 三好学生
+  meta: 高中多次
+- class: medal-item reveal tilt
+  icon: ⭐
+  title: 优秀共青团员
+  meta: 高中
+- class: medal-item reveal tilt deco-holder star-anchor
+  icon: 🏆
+  title: 校级创新大赛一等奖
+  meta: 高中
+- class: medal-item reveal tilt
+  icon: 🤖
+  title: AI 训练认证证书
+  meta: 自学获得
+- class: medal-item reveal tilt
+  icon: 🎓
+  title: RST 省级奖项
+  meta: 大学

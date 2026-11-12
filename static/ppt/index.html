@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>人工智能的演变与进化</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      background: #000;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .deck { position: fixed; inset: 0; }
+    .stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .slide-img {
+      max-width: 100vw;
+      max-height: 100vh;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
+      display: block;
+    }
+    .slide-img.anim-morph { animation: morphIn 0.95s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
+    .slide-img.anim-fade { animation: fadeIn 0.7s ease both; }
+    .slide-img.anim-fall { animation: fallIn 0.95s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    @keyframes morphIn {
+      from { opacity: 0; transform: scale(1.05); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes fallIn {
+      from { opacity: 0; transform: translateY(-55%) rotate(3deg); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(0,0,0,0.45);
+      color: #fff;
+      font-size: 26px;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 10;
+      transition: 0.2s;
+      touch-action: manipulation;
+    }
+    .nav:hover { background: rgba(0,0,0,0.75); border-color: rgba(255,255,255,0.5); }
+    .nav.prev { left: 18px; }
+    .nav.next { right: 18px; }
+
+    .counter {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.8);
+      font-size: 14px;
+      letter-spacing: 2px;
+      z-index: 10;
+      background: rgba(0,0,0,0.4);
+      padding: 6px 16px;
+      border-radius: 40px;
+    }
+    .progress {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      width: 100%;
+      background: rgba(255,255,255,0.12);
+      z-index: 10;
+    }
+    .progress i {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      transition: width 0.3s ease;
+    }
+    .tool {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+    }
+    .tool button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(0,0,0,0.45);
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+      touch-action: manipulation;
+    }
+    .tool button:hover { background: rgba(0,0,0,0.75); }
+    .tool button.on { background: rgba(0,140,255,0.6); border-color: rgba(0,200,255,0.7); }
+    .hint {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      color: rgba(255,255,255,0.7);
+      font-size: 13px;
+      background: rgba(0,0,0,0.4);
+      padding: 6px 14px;
+      border-radius: 40px;
+      z-index: 10;
+    }
+    @media (max-width: 640px) {
+      .nav { width: 44px; height: 44px; font-size: 22px; }
+      .hint { font-size: 12px; }
+      .counter { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck" id="deck">
+    <div class="stage" id="stage"><img class="slide-img" id="cur" alt=""></div>
+    <div class="hint">← → 翻页 · 点击两侧切换</div>
+    <div class="tool">
+      <button id="fsbtn" title="全屏">⛶</button>
+      <button id="autobtn" title="自动播放">▶</button>
+    </div>
+    <button class="nav prev" id="prev" aria-label="上一页">‹</button>
+    <button class="nav next" id="next" aria-label="下一页">›</button>
+    <div class="counter"><span id="num">1</span> / <span id="total">15</span></div>
+    <div class="progress"><i id="bar"></i></div>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+      var TOTAL = 15;
+      var cur = 1;
+      var img = document.getElementById('cur');
+      var stage = document.getElementById('stage');
+      var numEl = document.getElementById('num');
+      var barEl = document.getElementById('bar');
+      var auto = false;
+      var autoTimer = null;
+
+      // 每页转场类型：1 淡入；2-14 morph（用淡入变焦近似）；15 俯冲
+      function animClass(i) {
+        if (i === 1) return 'anim-fade';
+        if (i === TOTAL) return 'anim-fall';
+        return 'anim-morph';
+      }
+
+      function show(i, animate) {
+        cur = Math.max(1, Math.min(TOTAL, i));
+        img.classList.remove('anim-morph', 'anim-fade', 'anim-fall');
+        img.src = 'slides/slide-' + (cur < 10 ? '0' + cur : cur) + '.png';
+        img.alt = 'slide ' + cur;
+        if (animate) {
+          void img.offsetWidth;
+          img.classList.add(animClass(cur));
+        }
+        numEl.innerText = cur;
+        barEl.style.width = (cur / TOTAL * 100) + '%';
+      }
+
+      function next() { show(cur + 1, true); }
+      function prev() { show(cur - 1, true); }
+
+      document.getElementById('next').addEventListener('click', function (e) { e.stopPropagation(); next(); });
+      document.getElementById('prev').addEventListener('click', function (e) { e.stopPropagation(); prev(); });
+
+      // 点击两侧翻页
+      stage.addEventListener('click', function (e) {
+        var x = e.clientX;
+        var w = window.innerWidth;
+        if (x < w * 0.35) prev();
+        else if (x > w * 0.65) next();
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { next(); }
+        else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { prev(); }
+        else if (e.key === 'Home') { show(1, true); }
+        else if (e.key === 'End') { show(TOTAL, true); }
+      });
+
+      // 触屏滑动
+      var sx = 0, sy = 0;
+      stage.addEventListener('touchstart', function (e) { sx = e.changedTouches[0].clientX; sy = e.changedTouches[0].clientY; }, { passive: true });
+      stage.addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - sx;
+        var dy = e.changedTouches[0].clientY - sy;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { if (dx < 0) next(); else prev(); }
+      }, { passive: true });
+
+      // 全屏
+      document.getElementById('fsbtn').addEventListener('click', function () {
+        if (document.fullscreenElement) { document.exitFullscreen(); }
+        else if (document.documentElement.requestFullscreen) { document.documentElement.requestFullscreen(); }
+      });
+
+      // 自动播放
+      function setAuto(on) {
+        auto = on;
+        document.getElementById('autobtn').classList.toggle('on', on);
+        if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+        if (auto) { autoTimer = setInterval(function () { next(); }, 3000); }
+      }
+      document.getElementById('autobtn').addEventListener('click', function () { setAuto(!auto); });
+
+      show(1, false);
+    })();
+  </script>
+</body>
+</html>

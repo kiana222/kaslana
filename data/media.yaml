@@ -1,0 +1,23 @@
+certFiles:
+- 2.jpg
+- 3.jpg
+- 4.jpg
+- 5.jpg
+- 6.jpg
+- 7.jpg
+certMeta:
+  2.jpg: 南宁三中科技文化节一等奖荣誉证书
+  3.jpg: 阿里云Apsara Clouder大模型认证证书
+  4.jpg: 人工智能训练师高级证书
+  5.jpg: 荣誉证书
+  6.jpg: 荣誉证书
+  7.jpg: 荣誉证书
+songs:
+- name: 轻快1
+  src: song1.mp3
+- name: 轻快2
+  src: song2.mp3
+- name: 轻快3
+  src: song3.mp3
+- name: 轻快4
+  src: song4.mp3

@@ -1,0 +1,29 @@
+items:
+- class: skill-card reveal tilt deco-holder star-anchor
+  icon: 🎨
+  name: AI 制作 PPT / 音乐 / 视频
+  tier: 熟练运用
+- class: skill-card reveal tilt
+  icon: 💻
+  name: STM32
+  tier: 初步入门
+- class: skill-card reveal tilt
+  icon: 📊
+  name: Office 办公套件（Word / Excel / PPT）
+  tier: 熟练运用
+- class: skill-card reveal tilt
+  icon: 📣
+  name: 活动统筹 & 通知传达
+  tier: 进阶
+- class: skill-card reveal tilt
+  icon: 📝
+  name: 信息整理 & 文档撰写
+  tier: 进阶
+- class: skill-card reveal tilt
+  icon: 🤝
+  name: 团队协作 & 组织
+  tier: 熟练运用
+- class: skill-card reveal tilt
+  icon: 🚀
+  name: 快速学习 & 新工具上手
+  tier: 进阶
